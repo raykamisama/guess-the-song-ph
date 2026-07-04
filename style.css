@@ -1,0 +1,267 @@
+/* ============================================================
+   Guess the Song: PH Throwback Edition — simple karaoke style
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Poppins", "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #7b2ff7, #f107a3 45%, #ff8a00 100%);
+  background-attachment: fixed;
+}
+
+.app { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+/* ---------- Screens ---------- */
+.screen { display: none; animation: fadeIn 0.4s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+
+/* ---------- Cards ---------- */
+.card {
+  background: rgba(0, 0, 0, 0.28);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 22px;
+  padding: 22px;
+  margin: 0 auto 18px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+.hero { text-align: center; max-width: 640px; padding: 34px 26px; }
+
+/* ---------- Titles ---------- */
+.title-glow {
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.25), 0 0 26px rgba(255,255,255,0.4);
+}
+.subtitle { font-size: clamp(1.3rem, 4vw, 2rem); margin: 8px 0 20px; font-weight: 700; }
+
+.how { font-size: clamp(1.1rem, 3vw, 1.4rem); line-height: 2; margin: 18px 0 26px; }
+.mini-note { margin-top: 16px; opacity: 0.9; font-size: 1rem; }
+
+/* ---------- Game header ---------- */
+.game-header { text-align: center; margin-bottom: 16px; }
+.game-title {
+  font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+  font-weight: 800;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.25);
+}
+
+/* ---------- Round bar ---------- */
+.round-bar {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center; align-items: center;
+  margin-bottom: 16px;
+}
+.round-pill, .category-pill {
+  background: rgba(0,0,0,0.3);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+}
+.badge {
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 800;
+  color: #1a1a1a;
+  background: #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.diff-easy    { background: #3ddc84; color: #05210f; }
+.diff-medium  { background: #22c3ff; color: #04222b; }
+.diff-hard    { background: #ffb020; color: #3a2500; }
+.diff-hardest { background: #ff4d6d; color: #ffffff; }
+
+/* ---------- Video ---------- */
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px solid rgba(255,255,255,0.35);
+}
+#youtube-player { position: absolute; inset: 0; width: 100%; height: 100%; }
+#youtube-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-placeholder {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 20px; line-height: 1.5;
+  font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 700; color: #fff;
+  background: repeating-linear-gradient(45deg, #2a0a40, #2a0a40 18px, #3a0f55 18px, #3a0f55 36px);
+}
+
+/* Colorful "Listen Mode" cover — sits ON TOP of the playing video so the
+   audience hears audio but sees no video, title, thumbnail, or captions. */
+.video-placeholder.listen-mode {
+  background: linear-gradient(135deg, #7b2ff7, #f107a3 50%, #ff8a00);
+  background-size: 200% 200%;
+  animation: lmShift 6s ease infinite;
+  gap: 6px;
+}
+@keyframes lmShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.lm-badge {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.25);
+  animation: lmPulse 1.4s ease-in-out infinite;
+}
+@keyframes lmPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+.lm-main { font-size: clamp(1.2rem, 3.5vw, 1.8rem); font-weight: 800; }
+.lm-sub  { font-size: clamp(1rem, 3vw, 1.4rem); font-weight: 700; opacity: 0.95; }
+.timer-line {
+  text-align: center;
+  margin-top: 14px;
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
+  font-weight: 800;
+}
+.time-up { color: #ffe14d; }
+
+/* ---------- Hint ---------- */
+.hint-box {
+  background: rgba(255, 225, 77, 0.18);
+  border: 2px solid #ffe14d;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+}
+.hint-label { font-weight: 800; color: #ffe14d; }
+
+/* ---------- Answer / title ---------- */
+.answer-box {
+  text-align: center;
+  padding: 22px;
+  margin-bottom: 16px;
+  border-radius: 18px;
+  background: rgba(0,0,0,0.25);
+  border: 2px dashed rgba(255,255,255,0.35);
+}
+.hidden-title { font-size: clamp(1.3rem, 4vw, 2rem); font-weight: 700; opacity: 0.9; }
+.revealed.reveal-anim { animation: popIn 0.6s cubic-bezier(0.18, 1.4, 0.4, 1); }
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.answer-title { font-size: clamp(2rem, 6vw, 3rem); font-weight: 800; text-shadow: 0 2px 0 rgba(0,0,0,0.3); }
+.answer-artist { font-size: clamp(1.3rem, 4vw, 1.9rem); font-weight: 700; margin-top: 4px; color: #ffe14d; }
+.answer-cta { margin-top: 14px; font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 700; }
+#btn-showvideo { margin-top: 16px; }
+
+/* ---------- Sing challenge ---------- */
+.sing-box {
+  background: rgba(123, 47, 247, 0.28);
+  border: 2px solid #c99bff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+}
+.sing-label { font-weight: 800; color: #e9d5ff; }
+
+/* ---------- Buttons ---------- */
+.controls { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.controls.secondary { margin-top: 14px; }
+
+.btn {
+  font-family: inherit;
+  font-weight: 800;
+  font-size: clamp(1rem, 2.6vw, 1.2rem);
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  transition: transform 0.12s ease, filter 0.2s ease;
+}
+.btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+.btn:active { transform: translateY(1px) scale(0.98); }
+
+.btn-start {
+  background: linear-gradient(135deg, #00e676, #00b0ff);
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+  padding: 20px 44px;
+  border-radius: 20px;
+}
+.btn-play   { background: linear-gradient(135deg, #00e676, #00b248); }
+.btn-blue   { background: linear-gradient(135deg, #29b6f6, #0077c2); }
+.btn-yellow { background: linear-gradient(135deg, #ffd54f, #ffa000); color: #3a2500; }
+.btn-green  { background: linear-gradient(135deg, #66bb6a, #2e7d32); }
+.btn-purple { background: linear-gradient(135deg, #ab47bc, #6a1b9a); }
+.btn-pink   { background: linear-gradient(135deg, #ff4081, #c2185b); }
+.btn-ghost  { background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35); }
+
+/* ---------- Start screen extras ---------- */
+.start-secondary { margin-top: 14px; }
+
+/* ---------- "Open on YouTube" fallback link ---------- */
+.yt-fallback {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: underline;
+  opacity: 0.9;
+}
+.yt-fallback:hover { opacity: 1; }
+
+/* ---------- Test All Clips screen ---------- */
+.lead { font-size: clamp(1.05rem, 3vw, 1.35rem); margin-bottom: 16px; opacity: 0.95; }
+.lead.center { text-align: center; }
+
+#test-player-frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+#test-player-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.small-badge { padding: 4px 12px; font-size: 0.85rem; }
+
+.test-list { display: flex; flex-direction: column; gap: 12px; }
+.test-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  background: rgba(0,0,0,0.28);
+  border: 2px solid rgba(255,255,255,0.22);
+  border-radius: 16px;
+  padding: 14px 18px;
+}
+.test-row.active-row { border-color: #ffe14d; box-shadow: 0 0 18px rgba(255,225,77,0.4); }
+.test-info { display: flex; align-items: center; gap: 14px; min-width: 240px; flex: 1 1 300px; }
+.test-num {
+  font-size: 1.5rem; font-weight: 800; min-width: 40px; text-align: center;
+  background: rgba(255,255,255,0.15); border-radius: 12px; padding: 6px 0;
+}
+.test-title { font-size: 1.2rem; font-weight: 800; }
+.test-sub { font-size: 1rem; opacity: 0.9; }
+.test-tags { display: flex; align-items: center; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+.test-timing { font-size: 0.9rem; opacity: 0.9; background: rgba(255,255,255,0.12); padding: 3px 10px; border-radius: 999px; }
+.test-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.test-actions .btn { padding: 12px 16px; font-size: 1rem; }
+.yt-open { text-decoration: none; display: inline-block; }
+.yt-open.disabled { opacity: 0.4; pointer-events: none; }
+
+/* ---------- Utility ---------- */
+.hidden { display: none !important; }
+code { background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 6px; color: #ffe14d; font-size: 0.9em; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 620px) {
+  .btn { flex: 1 1 45%; }
+  .btn-start { width: 100%; }
+}

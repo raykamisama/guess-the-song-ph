@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Helps avoid YouTube Error 153 (referrer-based embed blocking) -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Guess the Song: PH Throwback Edition</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ===================== START SCREEN ===================== -->
+    <section id="screen-intro" class="screen active">
+      <div class="card hero">
+        <h1 class="title-glow">🎤 Guess the Song</h1>
+        <h2 class="subtitle">🇵🇭 PH Throwback Edition</h2>
+
+        <div class="how">
+          <p>🎧 Listen to a short clip.</p>
+          <p>🤔 Guess the title.</p>
+          <p>🎶 Sing a little part.</p>
+          <p>➡️ Move to the next song!</p>
+        </div>
+
+        <button class="btn btn-start" id="btn-start">▶ Start Game</button>
+        <div class="start-secondary">
+          <button class="btn btn-ghost" id="btn-test">🔊 Test All Clips</button>
+        </div>
+        <p class="mini-note">💡 Tip: run this by double-clicking <b>start-game.bat</b> for the smoothest video playback.</p>
+      </div>
+    </section>
+
+    <!-- ===================== GAME SCREEN ===================== -->
+    <section id="screen-game" class="screen">
+      <header class="game-header">
+        <h1 class="game-title">🎤 Guess the Song: PH Throwback Edition</h1>
+      </header>
+
+      <!-- Round info -->
+      <div class="round-bar">
+        <div class="round-pill">Round <span id="round-current">1</span> / <span id="round-total">16</span></div>
+        <div class="badge" id="difficulty-badge">Easy</div>
+        <div class="category-pill">🎵 <span id="category">Category</span></div>
+      </div>
+
+      <!-- Video (the clip plays behind the Listen Mode overlay) -->
+      <div class="card">
+        <div class="video-frame" id="song-frame">
+          <div id="youtube-player"></div>
+          <div class="video-placeholder" id="song-overlay">Press ▶ Play Clip to start</div>
+        </div>
+        <div class="timer-line">⏱️ <span id="timer">10</span> seconds</div>
+        <a class="yt-fallback hidden" id="yt-fallback" target="_blank" rel="noopener">😕 Video not playing? Open on YouTube (backup)</a>
+      </div>
+
+      <!-- Hint -->
+      <div class="hint-box hidden" id="hint-box">
+        <span class="hint-label">💡 Hint:</span> <span id="hint-text"></span>
+      </div>
+
+      <!-- Title: hidden then revealed -->
+      <div class="answer-box" id="answer-box">
+        <div class="hidden-title" id="hidden-title">🎶 ??? &nbsp;—&nbsp; Guess the title! 🎶</div>
+        <div class="revealed hidden" id="revealed">
+          <div class="answer-title" id="answer-title"></div>
+          <div class="answer-artist" id="answer-artist"></div>
+          <div class="answer-cta">🎤 Now sing the chorus or the next line!</div>
+          <button class="btn btn-blue" id="btn-showvideo">📺 Show Video After Reveal</button>
+        </div>
+      </div>
+
+      <!-- Sing challenge -->
+      <div class="sing-box hidden" id="sing-box">
+        <span class="sing-label">🎶 Sing Challenge:</span> <span id="sing-text"></span>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="btn btn-play"    id="btn-play">▶ Play Clip</button>
+        <button class="btn btn-blue"    id="btn-replay">🔁 Replay Clip</button>
+        <button class="btn btn-yellow"  id="btn-hint">💡 Show Hint</button>
+        <button class="btn btn-green"   id="btn-reveal">✅ Reveal Title</button>
+        <button class="btn btn-purple"  id="btn-sing">🎶 Show Sing Challenge</button>
+        <button class="btn btn-pink"    id="btn-next">⏭ Next Song</button>
+      </div>
+
+      <div class="controls secondary">
+        <button class="btn btn-ghost" id="btn-shuffle">🔀 Shuffle Songs: Off</button>
+        <button class="btn btn-ghost" id="btn-reset">🏠 Reset Game</button>
+      </div>
+    </section>
+
+    <!-- ===================== TEST ALL CLIPS SCREEN ===================== -->
+    <section id="screen-test" class="screen">
+      <header class="game-header">
+        <h1 class="game-title">🔊 Test All Clips</h1>
+      </header>
+      <p class="lead center">Quickly check every song before your presentation. (Presenter only.)</p>
+
+      <div class="card">
+        <div class="video-frame">
+          <div id="test-player-frame"></div>
+          <div class="video-placeholder" id="test-overlay">Click ▶ Test Clip on any song below</div>
+        </div>
+        <div class="controls">
+          <button class="btn btn-blue" id="btn-next-test">⏭ Next Test Song</button>
+          <button class="btn btn-pink" id="btn-back-game">🏠 Back to Game</button>
+        </div>
+      </div>
+
+      <div class="test-list" id="test-list"></div>
+    </section>
+
+  </div>
+
+  <!-- YouTube IFrame Player API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- Game logic (defer = runs after the HTML is parsed) -->
+  <script src="script.js" defer></script>
+</body>
+</html>
