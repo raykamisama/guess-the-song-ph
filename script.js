@@ -8,7 +8,7 @@
 
    - title            : the song title (the answer)
    - artist           : the performing artist
-   - difficulty       : "Easy", "Medium", "Hard", or "Hardest"
+   - difficulty       : "Easy", "Medium", or "Hard"
    - category         : short label shown during the round
    - hint             : shown when "Show Hint" is clicked
    - youtubeEmbedUrl  : an official YouTube link. Watch links,
@@ -29,7 +29,7 @@ console.log("script.js loaded");
 const DEFAULT_DURATION = 10;
 
 const songs = [
-  /* ---------------- EASY ---------------- */
+  /* ---------------- EASY (3) ---------------- */
   {
     title: "I Want It That Way",
     artist: "Backstreet Boys",
@@ -47,21 +47,10 @@ const songs = [
     difficulty: "Easy",
     category: "Movie Theme Ballad",
     hint: "The theme from Titanic.",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=0VaTtBRurys",
+    youtubeEmbedUrl: "https://www.youtube.com/watch?v=p79GmLNLMrY",
     startTime: 45,
     clipDuration: 12,
     singChallenge: "Sing: 'Near, far, wherever you are...'"
-  },
-  {
-    title: "Careless Whisper",
-    artist: "George Michael",
-    difficulty: "Easy",
-    category: "80s Ballad",
-    hint: "That famous saxophone intro.",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=izGwDsrQ1eQ",
-    startTime: 5,
-    clipDuration: 12,
-    singChallenge: "Sing: 'I'm never gonna dance again...'"
   },
   {
     title: "Ang Huling El Bimbo",
@@ -75,7 +64,7 @@ const songs = [
     singChallenge: "Sing: 'Kamukha mo si Paraluman...'"
   },
 
-  /* ---------------- MEDIUM ---------------- */
+  /* ---------------- MEDIUM (3) ---------------- */
   {
     title: "Harana",
     artist: "Parokya ni Edgar",
@@ -109,19 +98,8 @@ const songs = [
     clipDuration: 11,
     singChallenge: "Sing: 'My loneliness is killing me...'"
   },
-  {
-    title: "Livin' on a Prayer",
-    artist: "Bon Jovi",
-    difficulty: "Medium",
-    category: "80s Rock Anthem",
-    hint: "'Whoa, we're halfway there...'",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=lMGaiSqOp58",
-    startTime: 62,
-    clipDuration: 12,
-    singChallenge: "Sing: 'Whoa, we're halfway there...'"
-  },
 
-  /* ---------------- HARD ---------------- */
+  /* ---------------- HARD (3) ---------------- */
   {
     title: "When I Met You",
     artist: "APO Hiking Society",
@@ -145,72 +123,15 @@ const songs = [
     singChallenge: "Sing: 'You are my forevermore...'"
   },
   {
-    title: "Pare Ko",
-    artist: "Eraserheads",
-    difficulty: "Hard",
-    category: "OPM Rock",
-    hint: "A cheeky Eheads tune about heartbreak.",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=QFo4abPPpbs",
-    startTime: 30,
-    clipDuration: 11,
-    singChallenge: "Sing the catchy chorus (keep it clean 😄)!"
-  },
-  {
-    title: "Your Love",
-    artist: "Alamid",
-    difficulty: "Hard",
-    category: "OPM Rock Ballad",
-    hint: "'Oh, my love...' — a 90s Pinoy anthem.",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=VzvI8WObWck",
-    startTime: 45,
-    clipDuration: 12,
-    singChallenge: "Sing: 'Oh, my love, I'm so in love with you...'"
-  },
-
-  /* ---------------- HARDEST ---------------- */
-  {
     title: "More to Lose",
     artist: "Seona Dancing",
-    difficulty: "Hardest",
+    difficulty: "Hard",
     category: "80s New Wave",
     hint: "Ricky Gervais's old band — a cult hit in the PH!",
     youtubeEmbedUrl: "https://www.youtube.com/watch?v=Gw1MMcz_m4A",
     startTime: 40,
     clipDuration: 12,
     singChallenge: "Sing the dramatic chorus!"
-  },
-  {
-    title: "Don't Know What to Say",
-    artist: "Ric Segreto",
-    difficulty: "Hardest",
-    category: "OPM Ballad",
-    hint: "'Don't know what to do, don't know what to say...'",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=bpGG2GV2A_k",
-    startTime: 45,
-    clipDuration: 12,
-    singChallenge: "Sing: 'Don't know what to say...'"
-  },
-  {
-    title: "Kisapmata",
-    artist: "Rivermaya",
-    difficulty: "Hardest",
-    category: "OPM Rock",
-    hint: "A dreamy Rivermaya track from the 90s.",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=yuKpS02pKuA",
-    startTime: 40,
-    clipDuration: 12,
-    singChallenge: "Sing the chorus of this dreamy classic!"
-  },
-  {
-    title: "Kaleidoscope World",
-    artist: "Francis M.",
-    difficulty: "Hardest",
-    category: "OPM / Pinoy Hip-Hop",
-    hint: "A Francis Magalona classic about unity.",
-    youtubeEmbedUrl: "https://www.youtube.com/watch?v=ClNTn1wtq7E",
-    startTime: 45,
-    clipDuration: 12,
-    singChallenge: "Sing: 'Ohh, this kaleidoscope world...'"
   }
 ];
 

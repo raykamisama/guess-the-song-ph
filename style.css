@@ -79,7 +79,6 @@ body {
 .diff-easy    { background: #3ddc84; color: #05210f; }
 .diff-medium  { background: #22c3ff; color: #04222b; }
 .diff-hard    { background: #ffb020; color: #3a2500; }
-.diff-hardest { background: #ff4d6d; color: #ffffff; }
 
 /* ---------- Video ---------- */
 .video-frame {
